@@ -1,16 +1,15 @@
-FILE_PATH = "C:/Users/rogue/Desktop/3-5-App-Dev/library/" #Win10-VSCode
-#FILE_PATH = "" #PythonAnywhere
+FILE_PATH = "library/"
 
 def main():
     #Get Senator Lists
     senators = getSenatorsFromFile("Senate114.txt")
     #Tally up party totals
-    senatorTotals = partyTotals(senators)
+    statesWithPartyControl = statesControlledByParty(senators)
     #Print results
-    printPayload(senatorTotals)
-    
+    printPayload(statesWithPartyControl)
+
 def getSenatorsFromFile(senateFileName):
-    senators = [] 
+    senators = []
     infile = open(FILE_PATH + senateFileName, 'r')
     for line in infile:
         line = line.rstrip().split(',')
@@ -20,25 +19,33 @@ def getSenatorsFromFile(senateFileName):
     infile.close()
     return senators
 
-def partyTotals(senatorList:list):
+def statesControlledByParty(senatorList:list):
+    previousParty = ''
+    previousState = ''
     republicans = 0
     democrats = 0
     independents = 0
     for line in senatorList:
-        if line[2] == 'R':
-            republicans += 1
-        elif line[2] == 'D':
-            democrats += 1
-        elif line[2] == 'I':
-            independents += 1     
+        if line[1] == previousState and line[2] == previousParty:
+            if line[2] == 'R':
+                republicans += 1
+            elif line[2] == 'D':
+                democrats += 1
+            elif line[2] == 'I':
+                independents += 1
+        previousState = line[1]
+        previousParty = line[2]
     return {'republicans':republicans,
             'democrats':democrats,
             'independents':independents}
 
 def printPayload(senatorTotals:dict):
-    print("\nParty Affiliations:")
+    print("\nCount of States Controlled By Party Affiliation:")
     print("  Republicans: " + str(senatorTotals["republicans"]))
     print("  Democrats: " + str(senatorTotals["democrats"]))
     print("  Independents: " + str(senatorTotals["independents"]))
+    print("  TOTAL: " + str(senatorTotals["republicans"] +
+                                   senatorTotals["democrats"] +
+                                   senatorTotals["independents"]))
 
 main()

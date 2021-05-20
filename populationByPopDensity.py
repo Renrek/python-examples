@@ -1,8 +1,7 @@
-import nation
+from .nation import nation
 import pickle
 
-FILE_PATH = "C:/Users/rogue/Desktop/3-7-App-Dev/library/" #Win10-VSCode
-#FILE_PATH = "" #PythonAnywhere
+FILE_PATH = "library/"
 
 def main():
     print()

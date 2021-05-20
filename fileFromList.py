@@ -1,6 +1,5 @@
 
-FILE_PATH = "C:/Users/rogue/Desktop/3-5-App-Dev/library/" #Win10-VSCode
-#FILE_PATH = "" #PythonAnywhere
+FILE_PATH = "library/"
 
 def main():
     #Input from file while appending win percentage
